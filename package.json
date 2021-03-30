@@ -23,8 +23,8 @@
 	"homepage": "https://github.com/sdc224/hangouts-interact#readme",
 	"devDependencies": {
 		"@types/node": "13.7.4",
-		"@typescript-eslint/eslint-plugin": "2.34.0",
-		"@typescript-eslint/parser": "2.34.0",
+		"@typescript-eslint/eslint-plugin": "4.20.0",
+		"@typescript-eslint/parser": "4.20.0",
 		"eslint": "6.8.0",
 		"eslint-config-prettier": "6.10.0",
 		"eslint-plugin-prettier": "3.1.2",
