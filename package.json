@@ -1,0 +1,35 @@
+{
+	"name": "hangouts-interact",
+	"version": "1.0.0",
+	"description": "A Repository for doing hangouts messages",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"No test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/sdc224/hangouts-interact.git"
+	},
+	"keywords": [
+		"hangouts",
+		"typescript",
+		"nodejs"
+	],
+	"author": "sdc224",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/sdc224/hangouts-interact/issues"
+	},
+	"homepage": "https://github.com/sdc224/hangouts-interact#readme",
+	"devDependencies": {
+		"@types/node": "13.7.4",
+		"@typescript-eslint/eslint-plugin": "2.34.0",
+		"@typescript-eslint/parser": "2.34.0",
+		"eslint": "6.8.0",
+		"eslint-config-prettier": "6.10.0",
+		"eslint-plugin-prettier": "3.1.2",
+		"prettier": "1.19.1",
+		"ts-node": "8.6.2",
+		"typescript": "3.9.6"
+	}
+}
