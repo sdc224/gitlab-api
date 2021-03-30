@@ -22,7 +22,7 @@
 	},
 	"homepage": "https://github.com/sdc224/hangouts-interact#readme",
 	"devDependencies": {
-		"@types/node": "13.7.4",
+		"@types/node": "13.13.48",
 		"@typescript-eslint/eslint-plugin": "2.34.0",
 		"@typescript-eslint/parser": "2.34.0",
 		"eslint": "6.8.0",
