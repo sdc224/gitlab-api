@@ -1,0 +1,23 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+
+	"files.exclude": {
+		"lib": false // set this to true to hide the "out" folder with the compiled JS files,
+	},
+	"files.eol": "\n",
+
+	"search.exclude": {
+		"lib": true, // set this to false to include "out" folder in search results
+		"yarn.lock": true,
+		"yarnrc": true
+	},
+
+	// Turn off tsc task auto detection since we have the necessary tasks as npm scripts
+	"typescript.tsc.autoDetect": "off",
+
+	// --------- Extension specific settings ---------
+	"eslint.onIgnoredFiles": "off",
+	"cSpell.words": ["typedoc", "transpilation"]
+}

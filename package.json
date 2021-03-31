@@ -1,35 +1,74 @@
 {
-	"name": "hangouts-interact",
+	"name": "@sdc224/gitlab-api",
 	"version": "1.0.0",
-	"description": "A Repository for doing hangouts messages",
-	"main": "index.js",
+	"description": "A Repository for using Gitlab API in NodeJS",
+	"cdn": "dist/index.umd.js",
+	"main": "dist/index.js",
+	"types": "types/index.d.ts",
+	"unpkg": "dist/index.umd.js",
+	"module": "dist/index.esm.js",
+	"jsdelivr": "dist/index.umd.js",
+	"umd:main": "dist/index.umd.js",
+	"exports": {
+		".": [
+			{
+				"import": "./dist/index.mjs",
+				"require": "./dist/index.cjs",
+				"default": "./dist/index.js"
+			},
+			"./dist/index.js"
+		]
+	},
 	"scripts": {
-		"test": "echo \"No test specified\" && exit 1"
+		"doc": "typedoc src/index.ts",
+		"test": "npm run test:lint && npm run test:unit",
+		"test:lint": "eslint \"*/**/*.{ts,js,json}\"",
+		"test:unit": "jest",
+		"lint": "eslint \"*/**/*.{ts,js,json}\" --fix",
+		"build": "rollup --config ./rollup.config.js",
+		"prepublishOnly": "npm run doc && npm run build && npm run test"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/sdc224/hangouts-interact.git"
+		"url": "git+https://github.com/sdc224/gitlab-api.git"
 	},
 	"keywords": [
-		"hangouts",
+		"gitlab",
+		"api",
 		"typescript",
 		"nodejs"
 	],
-	"author": "sdc224",
+	"author": {
+		"name": "Sourodeep Chatterjee",
+		"email": "sourodeep224@outlook.com",
+		"url": "https://github.com/sdc224"
+	},
 	"license": "ISC",
 	"bugs": {
-		"url": "https://github.com/sdc224/hangouts-interact/issues"
+		"url": "https://github.com/sdc224/gitlab-api/issues"
 	},
-	"homepage": "https://github.com/sdc224/hangouts-interact#readme",
+	"homepage": "https://github.com/sdc224/gitlab-api#readme",
 	"devDependencies": {
-		"@types/node": "13.7.4",
-		"@typescript-eslint/eslint-plugin": "2.34.0",
-		"@typescript-eslint/parser": "2.34.0",
-		"eslint": "6.8.0",
-		"eslint-config-prettier": "6.10.0",
-		"eslint-plugin-prettier": "3.1.2",
-		"prettier": "1.19.1",
-		"ts-node": "8.6.2",
-		"typescript": "3.9.6"
+		"@types/eslint": "^7.2.7",
+		"@types/jest": "^26.0.22",
+		"@types/node": "14.14.37",
+		"@typescript-eslint/eslint-plugin": "4.20.0",
+		"@typescript-eslint/parser": "4.20.0",
+		"eslint": "7.23.0",
+		"eslint-config-prettier": "8.1.0",
+		"eslint-plugin-prettier": "3.3.1",
+		"jest": "^26.6.3",
+		"prettier": "2.2.1",
+		"rollup": "^2.44.0",
+		"rollup-plugin-terser": "^7.0.2",
+		"rollup-plugin-typescript2": "^0.30.0",
+		"ts-jest": "^26.5.4",
+		"ts-node": "9.1.1",
+		"typedoc": "^0.20.34",
+		"typedoc-plugin-markdown": "^3.6.0",
+		"typescript": "4.2.3"
+	},
+	"dependencies": {
+		"axios": "^0.21.1"
 	}
 }
