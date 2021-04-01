@@ -6,7 +6,8 @@
  * @type {import('@jest/types').Config.InitialOptions}
  */
 const options = {
-	preset: "ts-jest"
+	preset: "ts-jest",
+	testEnvironment: "node"
 };
 
 module.exports = options;

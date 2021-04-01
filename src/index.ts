@@ -1,24 +1,28 @@
-/**
- * A Branded Type for values parseable to number.
- */
-export type NumberParseable = (number | string | boolean) & {
-	readonly isNumberParseble: unique symbol;
+import Config from "./configs";
+import handleDefaultParams from "./constants";
+import Authentication from "./authentication";
+import Controller from "./controllers";
+import ProjectsBundle from "./logic/Projects";
+
+const Gitlab = (constructorObject: GitlabConstructor): IGitlab => {
+	const { configObject, authenticationObject } = handleDefaultParams(constructorObject);
+
+	const config = Config(
+		configObject.host,
+		configObject.apiVersion,
+		configObject.timeout,
+		configObject.apiVersion,
+		configObject.endpoints
+	);
+	const authentication = Authentication(
+		authenticationObject.tokenType,
+		authenticationObject.tokenValue
+	);
+
+	const controller = Controller(config, authentication);
+	const Projects = ProjectsBundle(config, controller);
+
+	return { Projects };
 };
 
-/**
- * Check if value is parseable to number.
- * @example ```ts
- * isNumberParseable('AAAA');
- * //=> false
- *
- * isNumberParseable('100');
- * //=> true
- *
- * if (!isNumberParseable(value))
- *   throw new Error('Value can\'t be parseable to `Number`.')
- * return Number(value);
- * ```
- * @param value - An `unknown` value to be checked.
- */
-export const isNumberParseable = (value: unknown): value is NumberParseable =>
-	!Number.isNaN(Number(value));
+export default Gitlab;
