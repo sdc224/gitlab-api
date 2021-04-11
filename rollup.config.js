@@ -67,6 +67,7 @@ const options = {
 	plugins: [
 		typescript2({
 			clean: true,
+			useTsconfigDeclarationDir: true,
 			tsconfig: "./tsconfig.bundle.json"
 		})
 	]
