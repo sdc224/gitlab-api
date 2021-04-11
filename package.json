@@ -50,6 +50,9 @@
 			"url": "https://github.com/sdc224"
 		}
 	],
+	"publishConfig": {
+		"access": "public"
+	},
 	"license": "ISC",
 	"bugs": {
 		"url": "https://github.com/sdc224/gitlab-api/issues"
