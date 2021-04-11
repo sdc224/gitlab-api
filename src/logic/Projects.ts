@@ -5,7 +5,8 @@ import type {
 	GetUserProjectRequestObject,
 	IProjectSchema,
 	GetProjectRequestObject,
-	IProjects
+	IProjects,
+	GetSingleProjectRequestObject
 } from "../models";
 
 const Projects = (config: IConfig, controller: IController): IProjects => {
@@ -19,8 +20,8 @@ const Projects = (config: IConfig, controller: IController): IProjects => {
 
 	const prepareUserStarredProjectQueryURL = (requestObject: any, optionalUrl = "") => {
 		if (optionalUrl.length > 0) optionalUrl = `/${optionalUrl}`;
-		const userId = requestObject.user_id;
 
+		const userId = requestObject.user_id;
 		delete requestObject.user_id;
 
 		const endpointSchema = config.getEndpointSchema("users");
@@ -31,13 +32,28 @@ const Projects = (config: IConfig, controller: IController): IProjects => {
 		return { endpointSchema, params };
 	};
 
-	const handleApiCall = async (endpointSchema: IEndpointSchema, params: string, data?: any) => {
+	const prepareSingleProjectQueryURL = (requestObject: any, optionalUrl = "") => {
+		if (optionalUrl.length > 0) optionalUrl = `/${optionalUrl}`;
+
+		const id = requestObject.id;
+		delete requestObject.id;
+
+		const endpointSchema = config.getEndpointSchema("projects");
+		const params = `${endpointSchema.path}/${id}${convertObjectToQuery(requestObject)}`;
+
+		return { endpointSchema, params };
+	};
+
+	const handleApiCall = async <T>(
+		endpointSchema: IEndpointSchema,
+		params: string,
+		data?: any
+	) => {
 		let res = null;
 
 		// Call by object key value passing is not working for generic functions :C
 		if (endpointSchema.method === "get") res = await controller.get<IProjectSchema[]>(params);
-		else if (endpointSchema.method === "post")
-			res = await controller.post<IProjectSchema[]>(params, data);
+		else if (endpointSchema.method === "post") res = await controller.post<T>(params, data);
 		else throw new Error("Incorrect Method Called");
 
 		return res.data;
@@ -50,7 +66,7 @@ const Projects = (config: IConfig, controller: IController): IProjects => {
 
 			const { endpointSchema, params } = prepareProjectQueryURL(requestObject);
 
-			const data = await handleApiCall(endpointSchema, params);
+			const data = await handleApiCall<IProjectSchema[]>(endpointSchema, params);
 
 			return caseConverter(data, "camel") as IProjectSchema[];
 		},
@@ -64,7 +80,7 @@ const Projects = (config: IConfig, controller: IController): IProjects => {
 
 			const { endpointSchema, params } = prepareProjectQueryURL(requestObject);
 
-			const data = await handleApiCall(endpointSchema, params);
+			const data = await handleApiCall<IProjectSchema[]>(endpointSchema, params);
 
 			return caseConverter(data, "camel") as IProjectSchema[];
 		},
@@ -78,9 +94,20 @@ const Projects = (config: IConfig, controller: IController): IProjects => {
 
 			const { endpointSchema, params } = prepareUserStarredProjectQueryURL(requestObject);
 
-			const data = await handleApiCall(endpointSchema, params);
+			const data = await handleApiCall<IProjectSchema[]>(endpointSchema, params);
 
 			return caseConverter(data, "camel") as IProjectSchema[];
+		},
+		get: async (singleProjectRequestObject: GetSingleProjectRequestObject) => {
+			if (!singleProjectRequestObject.id) throw new Error("Project ID must be there!");
+
+			const requestObject = caseConverter(singleProjectRequestObject, "snake");
+			const { endpointSchema, params } = prepareSingleProjectQueryURL(requestObject);
+			let data = await handleApiCall<IProjectSchema>(endpointSchema, params);
+
+			if (Array.isArray(data)) data = data[0];
+
+			return caseConverter(data, "camel") as IProjectSchema;
 		}
 	};
 };

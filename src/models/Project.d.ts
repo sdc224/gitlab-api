@@ -93,8 +93,28 @@ export type GetProjectRequestObject = {
 
 export type GetUserProjectRequestObject = GetProjectRequestObject & { userId: string };
 
+export type GetSingleProjectRequestObject = {
+	/**
+	 * The ID or URL-encoded path of the project.
+	 */
+	id: number | string;
+	/**
+	 * Include project license data.
+	 */
+	license?: boolean;
+	/**
+	 * Include project statistics.
+	 */
+	statistics?: boolean;
+	/**
+	 * Include custom attributes in response. (admins only)
+	 */
+	withCustomAttributes?: boolean;
+};
+
 export type IProjects = {
 	readonly all: (_?: GetProjectRequestObject) => Promise<IProjectSchema[]>;
 	readonly user: (_: GetUserProjectRequestObject) => Promise<IProjectSchema[]>;
 	readonly starredByUser: (_: GetUserProjectRequestObject) => Promise<IProjectSchema[]>;
+	readonly get: (_: GetSingleProjectRequestObject) => Promise<IProjectSchema>;
 };
