@@ -58,7 +58,7 @@
 	"publishConfig": {
 		"access": "public"
 	},
-	"license": "ISC",
+	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/sdc224/gitlab-api/issues"
 	},

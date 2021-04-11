@@ -12,7 +12,7 @@ const environment = process.env.NODE_ENV;
  */
 const banner = `/*!
  * ${pkg.name} v${pkg.version}
- * (c) ${pkg.author.name}
+ * (c) ${pkg.author.name}. All Rights Reserved
  * Released under the ${pkg.license} License.
  */
 `;
