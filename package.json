@@ -20,8 +20,8 @@
 		]
 	},
 	"files": [
-		"./dist",
-		"./types"
+		"dist",
+		"types"
 	],
 	"scripts": {
 		"doc": "typedoc src/index.ts",
