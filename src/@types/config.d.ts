@@ -1,16 +1,16 @@
-type IEndpointSchema = {
+export type IEndpointSchema = {
 	path: string;
 	method: IControllerKey;
 };
 
-type IEndpoints = {
+export type IEndpoints = {
 	projects: IEndpointSchema;
 	users: IEndpointSchema;
 };
 
-type IEndpointKey = keyof IEndpoints;
+export type IEndpointKey = keyof IEndpoints;
 
-type IConfigObject = {
+export type IConfigObject = {
 	host: string;
 	baseURL: string;
 	apiUrl: string;
@@ -19,7 +19,7 @@ type IConfigObject = {
 	endpoints: IEndpoints;
 };
 
-type IConfig = {
+export type IConfig = {
 	readonly getHost: () => string;
 	readonly getBaseURL: () => string;
 	readonly getAPIVersion: () => string;

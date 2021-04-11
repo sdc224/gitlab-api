@@ -1,5 +1,12 @@
 import { caseConverter } from "../utils/objectHelper";
 import { convertObjectToQuery } from "../utils/urlHelper";
+import type { IConfig, IController, IEndpointSchema } from "../@types";
+import type {
+	GetUserProjectRequestObject,
+	IProjectSchema,
+	GetProjectRequestObject,
+	IProjects
+} from "../models";
 
 jest.setTimeout(30000);
 

@@ -1,4 +1,4 @@
-type IProjectSchema = {
+export type IProjectSchema = {
 	id: number;
 	description?: null;
 	defaultBranch: string;
@@ -55,7 +55,7 @@ type IProjectSchema = {
 	approvalsBeforeMerge?: number;
 };
 
-type GetProjectRequestObject = {
+export type GetProjectRequestObject = {
 	archived?: boolean;
 	idAfter?: number;
 	idBefore?: number;
@@ -86,9 +86,9 @@ type GetProjectRequestObject = {
 	withProgrammingLanguage?: string;
 };
 
-type GetUserProjectRequestObject = GetProjectRequestObject & { userId: string };
+export type GetUserProjectRequestObject = GetProjectRequestObject & { userId: string };
 
-type IProjects = {
+export type IProjects = {
 	readonly all: (_?: GetProjectRequestObject) => Promise<IProjectSchema[]>;
 	readonly user: (_: GetUserProjectRequestObject) => Promise<IProjectSchema[]>;
 	readonly starredByUser: (_: GetUserProjectRequestObject) => Promise<IProjectSchema[]>;

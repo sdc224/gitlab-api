@@ -1,4 +1,5 @@
 import endpoints from "./defaultEndpoints";
+import type { IConfigObject } from "../@types";
 
 const defaultConfig: IConfigObject = {
 	host: "https://gitlab.example.com",

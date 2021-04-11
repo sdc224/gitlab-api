@@ -3,6 +3,7 @@ import handleDefaultParams from "./constants";
 import Authentication from "./authentication";
 import Controller from "./controllers";
 import ProjectsBundle from "./logic/Projects";
+import type { GitlabConstructor, IGitlab } from "./@types";
 
 const Gitlab = (constructorObject: GitlabConstructor): IGitlab => {
 	const { configObject, authenticationObject } = handleDefaultParams(constructorObject);

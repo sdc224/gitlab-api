@@ -1,4 +1,4 @@
-interface Namespace {
+export interface Namespace {
 	id: number;
 	name: string;
 	path?: string;

@@ -1,4 +1,4 @@
-type GitlabConstructor = {
+export type GitlabConstructor = {
 	token: string;
 	tokenType?: AuthenticationToken;
 	host?: string;
@@ -6,6 +6,6 @@ type GitlabConstructor = {
 	timeout?: number;
 };
 
-type IGitlab = {
+export type IGitlab = {
 	Projects: IProjects;
 };

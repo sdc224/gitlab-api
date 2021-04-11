@@ -1,4 +1,4 @@
-interface Links {
+export interface Links {
 	self?: string;
 	issues?: string;
 	mergeRequests?: string;

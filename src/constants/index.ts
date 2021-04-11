@@ -1,5 +1,6 @@
 import defaultConfig from "./defaultConfigs";
 import defaultAuthentication from "./defaultAuthentications";
+import type { GitlabConstructor, IConfigObject, IAuthenticationObject } from "../@types";
 
 const handleDefaultParams = (
 	constrObj: GitlabConstructor

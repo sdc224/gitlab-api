@@ -1,3 +1,5 @@
+import type { IEndpoints, IConfig, IConfigObject, IEndpointKey } from "../@types";
+
 const Config = (
 	host: string,
 	apiVersion: string,

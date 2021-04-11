@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import setupInterceptors from "./interceptors";
+import type { IConfig, IAuthentication, IController } from "../../@types";
 
 const AxiosController = (
 	config: IConfig,

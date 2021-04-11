@@ -1,4 +1,5 @@
 import { AuthenticationKey } from "./authenticationKeys";
+import type { AuthenticationToken, IAuthenticationObject, IAuthentication } from "../@types";
 
 const getAuthenticationKey = (tokenType: AuthenticationToken): string => {
 	// TODO Enum switcher

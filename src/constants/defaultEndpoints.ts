@@ -1,3 +1,5 @@
+import type { IEndpoints } from "../@types";
+
 const endpoints: IEndpoints = {
 	projects: {
 		method: "get",

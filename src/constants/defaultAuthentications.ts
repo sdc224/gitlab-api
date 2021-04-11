@@ -1,4 +1,5 @@
 import { AuthenticationKey } from "../authentication/authenticationKeys";
+import type { IAuthenticationObject } from "../@types";
 
 const defaultAuthentication: IAuthenticationObject = {
 	tokenType: "PersonalAccess",
