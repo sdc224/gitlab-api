@@ -16,12 +16,12 @@
 				"require": "./dist/index.cjs",
 				"default": "./dist/index.js"
 			},
-			"./dist/index.js"
+			"./dist/index.js",
+			"./types/index.d.ts"
 		]
 	},
 	"files": [
-		"./dist",
-		"./types"
+		"./dist"
 	],
 	"scripts": {
 		"doc": "typedoc src/index.ts",
