@@ -1,6 +1,6 @@
 {
 	"name": "@sdc224/gitlab-api",
-	"version": "1.0.0-6",
+	"version": "1.0.0",
 	"description": "A Repository for using Gitlab API in NodeJS",
 	"cdn": "dist/index.umd.js",
 	"main": "dist/index.js",
