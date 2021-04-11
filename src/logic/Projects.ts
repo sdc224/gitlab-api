@@ -34,7 +34,6 @@ const Projects = (config: IConfig, controller: IController): IProjects => {
 	const handleApiCall = async (endpointSchema: IEndpointSchema, params: string, data?: any) => {
 		let res = null;
 
-		console.log(params);
 		// Call by object key value passing is not working for generic functions :C
 		if (endpointSchema.method === "get") res = await controller.get<IProjectSchema[]>(params);
 		else if (endpointSchema.method === "post")
