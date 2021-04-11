@@ -76,6 +76,10 @@ const options = {
 				{
 					src: "src/@types",
 					dest: "dist/types"
+				},
+				{
+					src: "src/models",
+					dest: "dist/types"
 				}
 			]
 		})
