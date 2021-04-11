@@ -9,8 +9,7 @@ const options = {
 	semi: true,
 	trailingComma: "none",
 	singleQuote: false,
-	printWidth: 100,
-	tabWidth: 4
+	printWidth: 100
 };
 
 module.exports = options;
