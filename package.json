@@ -20,8 +20,7 @@
 		]
 	},
 	"files": [
-		"./dist",
-		"./types"
+		"./dist"
 	],
 	"scripts": {
 		"doc": "typedoc src/index.ts",
@@ -30,7 +29,8 @@
 		"test:unit": "jest",
 		"lint": "eslint \"*/**/*.{ts,js,json}\" --fix",
 		"build": "rollup --config ./rollup.config.js",
-		"prepublishOnly": "npm run doc && npm run build && npm run test"
+		"build:pkg": "cross-env NODE_ENV=production rollup --config ./rollup.config.js",
+		"prepublishOnly": "npm run doc && npm run build:pkg && npm run test"
 	},
 	"repository": {
 		"type": "git",
@@ -68,6 +68,7 @@
 		"@types/node": "14.14.37",
 		"@typescript-eslint/eslint-plugin": "4.21.0",
 		"@typescript-eslint/parser": "4.21.0",
+		"cross-env": "7.0.3",
 		"eslint": "7.24.0",
 		"eslint-config-prettier": "8.1.0",
 		"eslint-plugin-prettier": "3.3.1",

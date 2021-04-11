@@ -11,8 +11,7 @@
 		"sourceMap": true,
 
 		// Type declaration settings.
-		"declaration": true,
-		"declarationMap": true
+		"declaration": true
 	},
 	"exclude": ["./src/**/*.test.ts", "./src/**/*.test.tsx"]
 }

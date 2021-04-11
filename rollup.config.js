@@ -5,6 +5,8 @@ import typescript2 from "rollup-plugin-typescript2";
 
 import pkg from "./package.json";
 
+const environment = process.env.NODE_ENV;
+
 /**
  * Comment with library information to be appended in the generated bundles.
  */
@@ -25,8 +27,8 @@ function createOutputOptions(options) {
 		banner,
 		name: "@sdc224/gitlab-api",
 		exports: "named",
-		sourcemap: true,
-		...options,
+		sourcemap: environment !== "production",
+		...options
 	};
 }
 
@@ -38,37 +40,36 @@ const options = {
 	output: [
 		createOutputOptions({
 			file: "./dist/index.js",
-			format: "commonjs",
+			format: "commonjs"
 		}),
 		createOutputOptions({
 			file: "./dist/index.cjs",
-			format: "commonjs",
+			format: "commonjs"
 		}),
 		createOutputOptions({
 			file: "./dist/index.mjs",
-			format: "esm",
+			format: "esm"
 		}),
 		createOutputOptions({
 			file: "./dist/index.esm.js",
-			format: "esm",
+			format: "esm"
 		}),
 		createOutputOptions({
 			file: "./dist/index.umd.js",
-			format: "umd",
+			format: "umd"
 		}),
 		createOutputOptions({
 			file: "./dist/index.umd.min.js",
 			format: "umd",
-			plugins: [terser()],
-		}),
+			plugins: [terser()]
+		})
 	],
 	plugins: [
 		typescript2({
 			clean: true,
-			useTsconfigDeclarationDir: true,
-			tsconfig: "./tsconfig.bundle.json",
-		}),
-	],
+			tsconfig: "./tsconfig.bundle.json"
+		})
+	]
 };
 
 export default options;

@@ -40,6 +40,7 @@ __snapshots__
 # Package.json
 package.json
 .travis.yml
+rollup.config.js
 
 # Generated docs, bundles and type definitions.
 docs/
