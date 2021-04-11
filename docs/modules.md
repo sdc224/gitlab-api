@@ -22,4 +22,4 @@ Name | Type |
 
 **Returns:** IGitlab
 
-Defined in: [index.ts:7](https://github.com/sdc224/gitlab-api/blob/cc0caba/src/index.ts#L7)
+Defined in: [index.ts:7](https://github.com/sdc224/gitlab-api/blob/5b141af/src/index.ts#L7)
