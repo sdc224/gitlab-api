@@ -91,4 +91,5 @@ type GetUserProjectRequestObject = GetProjectRequestObject & { userId: string };
 type IProjects = {
 	readonly all: (_?: GetProjectRequestObject) => Promise<IProjectSchema[]>;
 	readonly user: (_: GetUserProjectRequestObject) => Promise<IProjectSchema[]>;
+	readonly starredByUser: (_: GetUserProjectRequestObject) => Promise<IProjectSchema[]>;
 };

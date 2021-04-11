@@ -11,7 +11,7 @@ const Gitlab = (constructorObject: GitlabConstructor): IGitlab => {
 		configObject.host,
 		configObject.apiVersion,
 		configObject.timeout,
-		configObject.apiVersion,
+		configObject.apiUrl,
 		configObject.endpoints
 	);
 	const authentication = Authentication(
