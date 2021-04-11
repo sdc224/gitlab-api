@@ -8,8 +8,6 @@ import type {
 	IProjects
 } from "../models";
 
-jest.setTimeout(30000);
-
 const Projects = (config: IConfig, controller: IController): IProjects => {
 	const prepareProjectQueryURL = (requestObject: any, optionalUrl = "") => {
 		if (optionalUrl.length > 0) optionalUrl = `/${optionalUrl}`;
@@ -87,7 +85,5 @@ const Projects = (config: IConfig, controller: IController): IProjects => {
 		}
 	};
 };
-
-jest.setTimeout(5000);
 
 export default Projects;
