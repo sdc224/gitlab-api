@@ -1,3 +1,8 @@
+import type { Links } from "./Links";
+import type { Namespace } from "./Namespace";
+import type { Owner } from "./Owner";
+import type { Statistics } from "./Statistics";
+
 export type IProjectSchema = {
 	id: number;
 	description?: null;

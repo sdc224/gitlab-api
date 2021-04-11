@@ -1,3 +1,5 @@
+import type { IControllerKey } from "./controller";
+
 export type IEndpointSchema = {
 	path: string;
 	method: IControllerKey;

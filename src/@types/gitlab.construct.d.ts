@@ -1,3 +1,6 @@
+import type { AuthenticationToken } from "./authentication";
+import type { IProjects } from "../models";
+
 export type GitlabConstructor = {
 	token: string;
 	tokenType?: AuthenticationToken;
