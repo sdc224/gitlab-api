@@ -3,11 +3,16 @@ import type { IControllerKey } from "./controller";
 export type IEndpointSchema = {
 	path: string;
 	method: IControllerKey;
+	options?: {
+		postOnCreation?: boolean;
+		otherPaths?: { [index: string]: string };
+	};
 };
 
 export type IEndpoints = {
 	projects: IEndpointSchema;
 	users: IEndpointSchema;
+	groups: IEndpointSchema;
 };
 
 export type IEndpointKey = keyof IEndpoints;
