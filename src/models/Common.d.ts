@@ -19,9 +19,11 @@ export type Sort = {
 	sort?: "asc" | "desc";
 };
 
-export type Entity = {
-	id: number | string;
+export type Entity = ID & {
 	name?: string;
+};
+
+export type EntityWithURL = Entity & {
 	avatarUrl?: string;
 	webUrl?: string;
 };
@@ -31,4 +33,11 @@ export type IncludeStatistics = {
 	 * Include project statistics.
 	 */
 	statistics?: boolean;
+};
+
+export type Visibility = {
+	/**
+	 * Limit by visibility public, internal, or private.
+	 */
+	visibility?: "public" | "internal" | "private";
 };

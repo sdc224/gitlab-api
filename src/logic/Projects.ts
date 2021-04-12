@@ -10,7 +10,8 @@ import type {
 	GetUserSingleProjectRequestObject,
 	GetGroupSingleProjectRequestObject,
 	GroupSchema,
-	GetForkSingleProjectRequestObject
+	GetForkSingleProjectRequestObject,
+	PostForkProjectRequestObject
 } from "../models";
 import type { User } from "../models/User";
 
@@ -88,15 +89,31 @@ const Projects = (config: IConfig, controller: IController): IProjects => {
 		delete requestObject.id;
 
 		const projectEndpointSchema = config.getEndpointSchema("projects");
-		const forkEndpointSchemaPath = projectEndpointSchema.options?.otherPaths?.forks;
+		const forksEndpointSchemaPath = projectEndpointSchema.options?.otherEndpoints?.forks;
+
+		if (!forksEndpointSchemaPath) throw new Error("Forks Path is missing!");
+
+		const params = `${projectEndpointSchema.path}/${id}${
+			forksEndpointSchemaPath.path
+		}${convertObjectToQuery(requestObject)}${optionalUrl}`;
+
+		return { method: forksEndpointSchemaPath.method, params };
+	};
+
+	const prepareForkProjectFormURL = (requestObject: any, optionalUrl = "") => {
+		if (optionalUrl.length > 0 && optionalUrl[0] !== "/") optionalUrl = `/${optionalUrl}`;
+
+		const id = requestObject.id;
+		delete requestObject.id;
+
+		const projectEndpointSchema = config.getEndpointSchema("projects");
+		const forkEndpointSchemaPath = projectEndpointSchema.options?.otherEndpoints?.fork;
 
 		if (!forkEndpointSchemaPath) throw new Error("Forks Path is missing!");
 
-		const params = `${
-			projectEndpointSchema.path
-		}/${id}${forkEndpointSchemaPath}${convertObjectToQuery(requestObject)}${optionalUrl}`;
+		const params = `${projectEndpointSchema.path}/${id}${forkEndpointSchemaPath.path}${optionalUrl}`;
 
-		return { method: projectEndpointSchema.method, params };
+		return { method: forkEndpointSchemaPath.method, params, formData: requestObject };
 	};
 
 	const handleApiCall = async <T>(method: IControllerKey, params: string, data?: any) => {
@@ -195,6 +212,18 @@ const Projects = (config: IConfig, controller: IController): IProjects => {
 			const data = await handleApiCall<ProjectSchema[]>(method, params);
 
 			return caseConverter(data, "camel") as ProjectSchema[];
+		},
+		fork: async (forkProjectRequestObject: PostForkProjectRequestObject) => {
+			if (!forkProjectRequestObject.id) throw new Error("Project ID must be there!");
+
+			const requestObject = caseConverter(forkProjectRequestObject, "snake");
+			const { method, params, formData } = prepareForkProjectFormURL(requestObject);
+
+			let data = await handleApiCall<ProjectSchema>(method, params, formData);
+
+			if (Array.isArray(data)) data = data[0];
+
+			return caseConverter(data, "camel") as ProjectSchema;
 		}
 	};
 };

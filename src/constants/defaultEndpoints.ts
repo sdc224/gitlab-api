@@ -6,7 +6,16 @@ const endpoints: IEndpoints = {
 		path: "/projects",
 		options: {
 			postOnCreation: true,
-			otherPaths: { forks: "/forks" }
+			otherEndpoints: {
+				forks: {
+					method: "get",
+					path: "/forks"
+				},
+				fork: {
+					method: "post",
+					path: "/fork"
+				}
+			}
 		}
 	},
 	users: {

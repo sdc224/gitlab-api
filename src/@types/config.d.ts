@@ -1,11 +1,14 @@
 import type { IControllerKey } from "./controller";
 
-export type IEndpointSchema = {
+export type EndpointMain = {
 	path: string;
 	method: IControllerKey;
+};
+
+export type IEndpointSchema = EndpointMain & {
 	options?: {
 		postOnCreation?: boolean;
-		otherPaths?: { [index: string]: string };
+		otherEndpoints?: { [index: string]: EndpointMain };
 	};
 };
 

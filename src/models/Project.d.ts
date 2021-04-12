@@ -4,7 +4,7 @@ import type { Owner } from "./Owner";
 import type { Statistics } from "./Statistics";
 import type { ContainerExpirationPolicy } from "./Container";
 import type { Group, GroupSchema } from "./Group";
-import type { ID, Search, Sort } from "./Common";
+import type { ID, Search, Sort, Entity, Visibility } from "./Common";
 import type { User } from "./User";
 
 export type Access = {
@@ -110,7 +110,8 @@ export type ProjectSchema = {
 
 export type GetBaseProjectRequestObject = Search &
 	Sort &
-	Statistics & {
+	Statistics &
+	Visibility & {
 		/**
 		 * Limit by archived status.
 		 */
@@ -143,10 +144,6 @@ export type GetBaseProjectRequestObject = Search &
 		 * Limit by projects starred by the current user.
 		 */
 		starred?: boolean;
-		/**
-		 * Limit by visibility public, internal, or private.
-		 */
-		visibility?: "public" | "internal" | "private";
 		/**
 		 * Include custom attributes in response. (admins only)
 		 */
@@ -218,6 +215,26 @@ export type GetGroupSingleProjectRequestObject = ID &
 
 export type GetForkSingleProjectRequestObject = ID & GetBaseProjectRequestObject;
 
+export type PostForkProjectRequestObject = Entity &
+	Visibility & {
+		/**
+		 * The ID of the namespace that the project is forked to.
+		 */
+		namespaceId?: number;
+		/**
+		 * The path of the namespace that the project is forked to.
+		 */
+		namespacePath?: string;
+		/**
+		 * The path assigned to the resultant project after forking.
+		 */
+		path?: string;
+		/**
+		 * The description assigned to the resultant project after forking.
+		 */
+		description?: string;
+	};
+
 export type IProjects = {
 	readonly all: (_?: GetProjectRequestObject) => Promise<ProjectSchema[]>;
 	readonly user: (_: GetUserProjectRequestObject) => Promise<ProjectSchema[]>;
@@ -226,4 +243,5 @@ export type IProjects = {
 	readonly getUsers: (_: GetUserSingleProjectRequestObject) => Promise<User[]>;
 	readonly getGroups: (_: GetGroupSingleProjectRequestObject) => Promise<GroupSchema[]>;
 	readonly getForks: (_: GetForkSingleProjectRequestObject) => Promise<GroupSchema[]>;
+	readonly fork: (_: PostForkProjectRequestObject) => Promise<ProjectSchema>;
 };

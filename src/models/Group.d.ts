@@ -1,4 +1,4 @@
-import type { Entity } from "./Common";
+import type { EntityWithURL } from "./Common";
 
 export type Group = {
 	groupId: number;
@@ -7,7 +7,7 @@ export type Group = {
 	groupAccessLevel?: number;
 };
 
-export type GroupSchema = Entity & {
+export type GroupSchema = EntityWithURL & {
 	fullName?: string;
 	fullPath?: string;
 };
