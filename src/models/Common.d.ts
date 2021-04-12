@@ -1,13 +1,13 @@
 export type ID = {
 	/**
-	 * The ID or URL-encoded path of the project.
+	 * The ID or URL-encoded path.
 	 */
 	id: number | string;
 };
 
 export type Search = {
 	/**
-	 * Search for specific users.
+	 * Search for specific users/title & description for MR.
 	 */
 	search?: string;
 };

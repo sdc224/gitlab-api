@@ -5,6 +5,7 @@ const endpoints: IEndpoints = {
 		method: "get",
 		path: "/projects",
 		options: {
+			deleteOnDeletion: true,
 			postOnCreation: true,
 			otherEndpoints: {
 				forks: {
@@ -14,9 +15,17 @@ const endpoints: IEndpoints = {
 				fork: {
 					method: "post",
 					path: "/fork"
+				},
+				labels: {
+					method: "get",
+					path: "/labels"
 				}
 			}
 		}
+	},
+	mergeRequests: {
+		method: "get",
+		path: "/merge_requests"
 	},
 	users: {
 		method: "get",

@@ -1,6 +1,6 @@
 import { caseConverter } from "../utils/objectHelper";
 import { convertObjectToQuery } from "../utils/urlHelper";
-import type { IConfig, IController, IControllerKey } from "../@types";
+import type { IConfig, IController } from "../@types";
 import type {
 	GetUserProjectRequestObject,
 	ProjectSchema,
@@ -11,9 +11,13 @@ import type {
 	GetGroupSingleProjectRequestObject,
 	GroupSchema,
 	GetForkSingleProjectRequestObject,
-	PostForkProjectRequestObject
+	PostForkProjectRequestObject,
+	GetLabelSingleProjectRequestObject,
+	GetSingleLabelSingleProjectRequestObject
 } from "../models";
 import type { User } from "../models/User";
+import type { LabelSchema, Label, SingleLabelSingleProjectRequestObject } from "../models/Label";
+import handleApiCall from "../utils/apiCaller";
 
 const Projects = (config: IConfig, controller: IController): IProjects => {
 	const prepareProjectQueryURL = (requestObject: any, optionalUrl = "") => {
@@ -100,7 +104,7 @@ const Projects = (config: IConfig, controller: IController): IProjects => {
 		return { method: forksEndpointSchemaPath.method, params };
 	};
 
-	const prepareForkProjectFormURL = (requestObject: any, optionalUrl = "") => {
+	const prepareForkProjectPostURL = (requestObject: any, optionalUrl = "") => {
 		if (optionalUrl.length > 0 && optionalUrl[0] !== "/") optionalUrl = `/${optionalUrl}`;
 
 		const id = requestObject.id;
@@ -109,33 +113,100 @@ const Projects = (config: IConfig, controller: IController): IProjects => {
 		const projectEndpointSchema = config.getEndpointSchema("projects");
 		const forkEndpointSchemaPath = projectEndpointSchema.options?.otherEndpoints?.fork;
 
-		if (!forkEndpointSchemaPath) throw new Error("Forks Path is missing!");
+		if (!forkEndpointSchemaPath) throw new Error("Fork Path is missing!");
 
 		const params = `${projectEndpointSchema.path}/${id}${forkEndpointSchemaPath.path}${optionalUrl}`;
 
 		return { method: forkEndpointSchemaPath.method, params, formData: requestObject };
 	};
 
-	const handleApiCall = async <T>(method: IControllerKey, params: string, data?: any) => {
-		let res = null;
+	const prepareLabelInSingleProjectQueryURL = (requestObject: any, optionalUrl = "") => {
+		if (optionalUrl.length > 0 && optionalUrl[0] !== "/") optionalUrl = `/${optionalUrl}`;
 
-		console.log(params);
-		// Call by object key value passing is not working for generic functions :C
-		if (method === "get") res = await controller.get<ProjectSchema[]>(params);
-		else if (method === "post") res = await controller.post<T>(params, data);
-		else throw new Error("Incorrect Method Called");
+		const id = requestObject.id;
+		const labelId = requestObject.label_id;
+		delete requestObject.id;
+		delete requestObject.label_id;
 
-		return res.data;
+		const projectEndpointSchema = config.getEndpointSchema("projects");
+		const labelsEndpointSchemaPath = projectEndpointSchema.options?.otherEndpoints?.labels;
+
+		if (!labelsEndpointSchemaPath) throw new Error("Labels Path is missing!");
+
+		const params = `${projectEndpointSchema.path}/${id}${
+			labelsEndpointSchemaPath.path
+		}/${labelId}${convertObjectToQuery(requestObject)}${optionalUrl}`;
+
+		return { method: labelsEndpointSchemaPath.method, params };
+	};
+	const prepareLabelsInSingleProjectQueryURL = (requestObject: any, optionalUrl = "") => {
+		if (optionalUrl.length > 0 && optionalUrl[0] !== "/") optionalUrl = `/${optionalUrl}`;
+
+		const id = requestObject.id;
+		delete requestObject.id;
+
+		const projectEndpointSchema = config.getEndpointSchema("projects");
+		const labelsEndpointSchemaPath = projectEndpointSchema.options?.otherEndpoints?.labels;
+
+		if (!labelsEndpointSchemaPath) throw new Error("Labels Path is missing!");
+
+		const params = `${projectEndpointSchema.path}/${id}${
+			labelsEndpointSchemaPath.path
+		}${convertObjectToQuery(requestObject)}${optionalUrl}`;
+
+		return { method: labelsEndpointSchemaPath.method, params };
+	};
+
+	const prepareLabelProjectPostURL = (requestObject: any, optionalUrl = "") => {
+		if (optionalUrl.length > 0 && optionalUrl[0] !== "/") optionalUrl = `/${optionalUrl}`;
+
+		const id = requestObject.id;
+		delete requestObject.id;
+
+		const projectEndpointSchema = config.getEndpointSchema("projects");
+		const labelsEndpointSchemaPath = projectEndpointSchema.options?.otherEndpoints?.labels;
+		const postOnCreation = projectEndpointSchema.options?.postOnCreation;
+
+		if (!labelsEndpointSchemaPath) throw new Error("Labels Path is missing!");
+
+		const params = `${projectEndpointSchema.path}/${id}${labelsEndpointSchemaPath.path}${optionalUrl}`;
+
+		return {
+			method: postOnCreation ? "post" : labelsEndpointSchemaPath.method,
+			params,
+			formData: requestObject
+		};
+	};
+
+	const prepareLabelProjectDeleteURL = (requestObject: any, optionalUrl = "") => {
+		if (optionalUrl.length > 0 && optionalUrl[0] !== "/") optionalUrl = `/${optionalUrl}`;
+
+		const id = requestObject.id;
+		const labelId = requestObject.label_id;
+		delete requestObject.id;
+		delete requestObject.label_id;
+
+		const projectEndpointSchema = config.getEndpointSchema("projects");
+		const labelsEndpointSchemaPath = projectEndpointSchema.options?.otherEndpoints?.labels;
+		const deleteOnDeletion = projectEndpointSchema.options?.deleteOnDeletion;
+
+		if (!labelsEndpointSchemaPath) throw new Error("Labels Path is missing!");
+
+		const params = `${projectEndpointSchema.path}/${id}${labelsEndpointSchemaPath.path}/${labelId}${optionalUrl}`;
+
+		return {
+			method: deleteOnDeletion ? "delete" : labelsEndpointSchemaPath.method,
+			params,
+			formData: requestObject
+		};
 	};
 
 	return {
-		all: async (projectRequestObject?: GetProjectRequestObject) => {
-			let requestObject = {};
-			if (projectRequestObject) requestObject = caseConverter(projectRequestObject, "snake");
+		all: async (projectRequestObject: GetProjectRequestObject = {}) => {
+			const requestObject = caseConverter(projectRequestObject, "snake");
 
 			const { method, params } = prepareProjectQueryURL(requestObject);
-
-			const data = await handleApiCall<ProjectSchema[]>(method, params);
+			const data = await handleApiCall<ProjectSchema[]>(controller, method, params);
 
 			return caseConverter(data, "camel") as ProjectSchema[];
 		},
@@ -149,7 +220,7 @@ const Projects = (config: IConfig, controller: IController): IProjects => {
 
 			const { method, params } = prepareProjectQueryURL(requestObject);
 
-			const data = await handleApiCall<ProjectSchema[]>(method, params);
+			const data = await handleApiCall<ProjectSchema[]>(controller, method, params);
 
 			return caseConverter(data, "camel") as ProjectSchema[];
 		},
@@ -163,7 +234,7 @@ const Projects = (config: IConfig, controller: IController): IProjects => {
 
 			const { method, params } = prepareUserStarredProjectQueryURL(requestObject);
 
-			const data = await handleApiCall<ProjectSchema[]>(method, params);
+			const data = await handleApiCall<ProjectSchema[]>(controller, method, params);
 
 			return caseConverter(data, "camel") as ProjectSchema[];
 		},
@@ -172,7 +243,7 @@ const Projects = (config: IConfig, controller: IController): IProjects => {
 
 			const requestObject = caseConverter(singleProjectRequestObject, "snake");
 			const { method, params } = prepareSingleProjectQueryURL(requestObject);
-			let data = await handleApiCall<ProjectSchema>(method, params);
+			let data = await handleApiCall<ProjectSchema>(controller, method, params);
 
 			if (Array.isArray(data)) data = data[0];
 
@@ -185,7 +256,7 @@ const Projects = (config: IConfig, controller: IController): IProjects => {
 			const requestObject = caseConverter(usersForSingleProjectRequestObject, "snake");
 			const { method, params } = prepareUsersInSingleProjectQueryURL(requestObject);
 
-			const data = await handleApiCall<User[]>(method, params);
+			const data = await handleApiCall<User[]>(controller, method, params);
 
 			return caseConverter(data, "camel") as User[];
 		},
@@ -198,7 +269,7 @@ const Projects = (config: IConfig, controller: IController): IProjects => {
 			const requestObject = caseConverter(groupsForSingleProjectRequestObject, "snake");
 			const { method, params } = prepareGroupsInSingleProjectQueryURL(requestObject);
 
-			const data = await handleApiCall<GroupSchema[]>(method, params);
+			const data = await handleApiCall<GroupSchema[]>(controller, method, params);
 
 			return caseConverter(data, "camel") as GroupSchema[];
 		},
@@ -209,7 +280,7 @@ const Projects = (config: IConfig, controller: IController): IProjects => {
 			const requestObject = caseConverter(forksForSingleProjectRequestObject, "snake");
 			const { method, params } = prepareForksInSingleProjectQueryURL(requestObject);
 
-			const data = await handleApiCall<ProjectSchema[]>(method, params);
+			const data = await handleApiCall<ProjectSchema[]>(controller, method, params);
 
 			return caseConverter(data, "camel") as ProjectSchema[];
 		},
@@ -217,13 +288,63 @@ const Projects = (config: IConfig, controller: IController): IProjects => {
 			if (!forkProjectRequestObject.id) throw new Error("Project ID must be there!");
 
 			const requestObject = caseConverter(forkProjectRequestObject, "snake");
-			const { method, params, formData } = prepareForkProjectFormURL(requestObject);
+			const { method, params, formData } = prepareForkProjectPostURL(requestObject);
 
-			let data = await handleApiCall<ProjectSchema>(method, params, formData);
+			let data = await handleApiCall<ProjectSchema>(controller, method, params, formData);
 
 			if (Array.isArray(data)) data = data[0];
 
 			return caseConverter(data, "camel") as ProjectSchema;
+		},
+		getLabel: async (
+			singleLabelProjectRequestObject: GetSingleLabelSingleProjectRequestObject
+		) => {
+			if (!(singleLabelProjectRequestObject.id && singleLabelProjectRequestObject.labelId))
+				throw new Error("Project ID & Label ID must be there!");
+
+			const requestObject = caseConverter(singleLabelProjectRequestObject, "snake");
+			const { method, params } = prepareLabelInSingleProjectQueryURL(requestObject);
+
+			let data = await handleApiCall<LabelSchema>(controller, method, params);
+
+			if (Array.isArray(data)) data = data[0];
+
+			return caseConverter(data, "camel") as LabelSchema;
+		},
+		getLabels: async (labelProjectRequestObject: GetLabelSingleProjectRequestObject) => {
+			if (!labelProjectRequestObject.id) throw new Error("Project ID must be there!");
+
+			const requestObject = caseConverter(labelProjectRequestObject, "snake");
+			const { method, params } = prepareLabelsInSingleProjectQueryURL(requestObject);
+
+			const data = await handleApiCall<LabelSchema[]>(controller, method, params);
+
+			return caseConverter(data, "camel") as LabelSchema[];
+		},
+		createLabel: async (labelRequestObject: Label) => {
+			if (!labelRequestObject.id) throw new Error("Project ID must be there!");
+
+			const requestObject = caseConverter(labelRequestObject, "snake");
+			const { method, params, formData } = prepareLabelProjectPostURL(requestObject);
+
+			let data = await handleApiCall<LabelSchema>(controller, method, params, formData);
+
+			if (Array.isArray(data)) data = data[0];
+
+			return caseConverter(data, "camel") as LabelSchema;
+		},
+		deleteLabel: async (deleteLabelRequestObject: SingleLabelSingleProjectRequestObject) => {
+			if (!(deleteLabelRequestObject.id && deleteLabelRequestObject.labelId))
+				throw new Error("Project ID & Label ID must be there!");
+
+			const requestObject = caseConverter(deleteLabelRequestObject, "snake");
+			const { method, params, formData } = prepareLabelProjectDeleteURL(requestObject);
+
+			let data = await handleApiCall<LabelSchema>(controller, method, params, formData);
+
+			if (Array.isArray(data)) data = data[0];
+
+			return caseConverter(data, "camel") as LabelSchema;
 		}
 	};
 };

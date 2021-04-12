@@ -7,6 +7,7 @@ export type EndpointMain = {
 
 export type IEndpointSchema = EndpointMain & {
 	options?: {
+		deleteOnDeletion?: boolean;
 		postOnCreation?: boolean;
 		otherEndpoints?: { [index: string]: EndpointMain };
 	};
@@ -14,6 +15,7 @@ export type IEndpointSchema = EndpointMain & {
 
 export type IEndpoints = {
 	projects: IEndpointSchema;
+	mergeRequests: IEndpointSchema;
 	users: IEndpointSchema;
 	groups: IEndpointSchema;
 };

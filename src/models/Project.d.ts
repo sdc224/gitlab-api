@@ -6,6 +6,13 @@ import type { ContainerExpirationPolicy } from "./Container";
 import type { Group, GroupSchema } from "./Group";
 import type { ID, Search, Sort, Entity, Visibility } from "./Common";
 import type { User } from "./User";
+import type {
+	LabelSchema,
+	Label,
+	GetSingleLabelSingleProjectRequestObject,
+	GetLabelSingleProjectRequestObject,
+	SingleLabelSingleProjectRequestObject
+} from "./Label";
 
 export type Access = {
 	accessLevel?: number;
@@ -244,4 +251,8 @@ export type IProjects = {
 	readonly getGroups: (_: GetGroupSingleProjectRequestObject) => Promise<GroupSchema[]>;
 	readonly getForks: (_: GetForkSingleProjectRequestObject) => Promise<GroupSchema[]>;
 	readonly fork: (_: PostForkProjectRequestObject) => Promise<ProjectSchema>;
+	readonly getLabel: (_: GetSingleLabelSingleProjectRequestObject) => Promise<LabelSchema>;
+	readonly getLabels: (_: GetLabelSingleProjectRequestObject) => Promise<LabelSchema[]>;
+	readonly createLabel: (_: Label) => Promise<LabelSchema>;
+	readonly deleteLabel: (_: SingleLabelSingleProjectRequestObject) => Promise<LabelSchema>;
 };

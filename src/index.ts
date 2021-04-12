@@ -3,6 +3,7 @@ import handleDefaultParams from "./constants";
 import Authentication from "./authentication";
 import Controller from "./controllers";
 import ProjectsBundle from "./logic/Projects";
+import MergeRequestsBundle from "./logic/MergeRequests";
 import type { GitlabConstructor, IGitlab } from "./@types";
 
 const Gitlab = (constructorObject: GitlabConstructor): IGitlab => {
@@ -22,8 +23,9 @@ const Gitlab = (constructorObject: GitlabConstructor): IGitlab => {
 
 	const controller = Controller(config, authentication);
 	const Projects = ProjectsBundle(config, controller);
+	const MergeRequests = MergeRequestsBundle(config, controller);
 
-	return { Projects };
+	return { Projects, MergeRequests };
 };
 
 export default Gitlab;

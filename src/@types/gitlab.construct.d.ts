@@ -1,5 +1,6 @@
 import type { AuthenticationToken } from "./authentication";
 import type { IProjects } from "../models";
+import type { IMergeRequests } from "../models/MergeRequest";
 
 export type GitlabConstructor = {
 	token: string;
@@ -11,4 +12,5 @@ export type GitlabConstructor = {
 
 export type IGitlab = {
 	Projects: IProjects;
+	MergeRequests: IMergeRequests;
 };
