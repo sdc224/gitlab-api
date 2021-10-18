@@ -64,7 +64,7 @@
 	"homepage": "https://github.com/sdc224/gitlab-api#readme",
 	"devDependencies": {
 		"@types/eslint": "7.2.9",
-		"@types/jest": "26.0.22",
+		"@types/jest": "26.0.24",
 		"@types/node": "14.14.37",
 		"@typescript-eslint/eslint-plugin": "4.21.0",
 		"@typescript-eslint/parser": "4.21.0",
