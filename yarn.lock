@@ -2116,7 +2116,7 @@ growly@^1.3.0:
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
   integrity sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=
 
-handlebars@^4.7.6, handlebars@^4.7.7:
+handlebars@^4.7.7:
   version "4.7.7"
   resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.7.7.tgz#9ce33416aad02dbd6c8fafa8240d5d98004945a1"
   integrity sha512-aAcXm5OAfE/8IXkcZvCepKU3VzW1/39Fb5ZuqMtgI/hT8X2YgoMvBY5dLhq/cpOvw7Lk1nK/UF71aLG/ZnVYRA==
@@ -4444,12 +4444,12 @@ typedoc-default-themes@^0.12.9:
   resolved "https://registry.yarnpkg.com/typedoc-default-themes/-/typedoc-default-themes-0.12.10.tgz#614c4222fe642657f37693ea62cad4dafeddf843"
   integrity sha512-fIS001cAYHkyQPidWXmHuhs8usjP5XVJjWB8oZGqkTowZaz3v7g3KDZeeqE82FBrmkAnIBOY3jgy7lnPnqATbA==
 
-typedoc-plugin-markdown@3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/typedoc-plugin-markdown/-/typedoc-plugin-markdown-3.6.0.tgz#08067aeb69a6b5e16c0eda72cceaa99cf91ff245"
-  integrity sha512-fg4xby3awJVVxB8TdhHNsZQfiTC5x1XmauVwhKXc6hGeu1bzTnqrkmDT8NCjxfUgw64si8cUX1jBfBjAHthWpQ==
+typedoc-plugin-markdown@3.17.1:
+  version "3.17.1"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-markdown/-/typedoc-plugin-markdown-3.17.1.tgz#c33f42363c185adf842f4699166015f7fe0ed02b"
+  integrity sha512-QzdU3fj0Kzw2XSdoL15ExLASt2WPqD7FbLeaqwT70+XjKyTshBnUlQA5nNREO1C2P8Uen0CDjsBLMsCQ+zd0lw==
   dependencies:
-    handlebars "^4.7.6"
+    handlebars "^4.7.7"
 
 typedoc@0.20.35:
   version "0.20.35"
